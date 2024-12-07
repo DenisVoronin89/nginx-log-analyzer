@@ -1,0 +1,30 @@
+#### Структура проекта: ####
+
+nginx_log_analyzer/
+├── parsers/
+│   ├── __init__.py
+│   ├── log_parser.py
+├── analytics/
+│   ├── __init__.py
+│   ├── stats_calculator.py
+├── output/
+│   ├── __init__.py
+│   ├── csv_writer.py
+│   ├── report.csv
+├── tests/
+│   ├── test_log_parser.py
+│   ├── test_stats_calculator.py
+│   ├── test_csv_writer.py
+├── .github/
+│   ├── workflows/
+│   │   ├── ci_cd.yml
+├── logs/
+│   ├── nginx.log
+└── .gitkeep
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+├── documentation.txt
+├── pyproject.toml
+├── main.py
+├── README.md

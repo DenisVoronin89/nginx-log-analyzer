@@ -1,0 +1,12 @@
+
+services:
+  nginx-log-analyzer:
+    build:
+      context: .
+    container_name: nginx-log-analyzer
+    volumes:
+      - /Users/apple/PycharmProjects/nginx_log_analyzer/logs:/app/logs
+      - /Users/apple/PycharmProjects/nginx_log_analyzer/output:/app/output
+    environment:
+      - TIMEZONE=Europe/Moscow
+    command: python main.py /app/logs/nginx.log Europe/Moscow /app/output/report.csv
