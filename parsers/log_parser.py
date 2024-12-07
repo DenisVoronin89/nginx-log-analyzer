@@ -8,7 +8,8 @@ class LogParser:
     Класс для парсинга логов Nginx.
     """
 
-    LOG_PATTERN = r'(?P<ip>\S+) \S+ \S+ \[(?P<datetime>[^\]]+)\] "\S+ \S+ \S+" (?P<status>\d{3}) \S+ (?P<response_time>\d+\.\d+)'  # регулярное выражение
+    # регулярное выражение
+    LOG_PATTERN = r'(?P<ip>\S+) \S+ \S+ \[(?P<datetime>[^\]]+)\] "\S+ \S+ \S+" (?P<status>\d{3}) \S+ (?P<response_time>\d+\.\d+)'
 
     def __init__(self, timezone: str = "UTC"):
         self.timezone = pytz.timezone(timezone)

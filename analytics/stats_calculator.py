@@ -1,6 +1,3 @@
-import statistics
-
-
 class StatsCalculator:
     """
     Класс для расчета статистики по метрикам.
@@ -10,7 +7,7 @@ class StatsCalculator:
     def calculate(response_times):
         if (
             not response_times
-        ):  # Если список пустой, возвращаем значения по умолчанию
+        ):  # Если список пустой, возвращается значение по умолчанию
             return {
                 "average": 0,
                 "median": 0,
