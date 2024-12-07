@@ -24,7 +24,9 @@ class TestStatsCalculator(unittest.TestCase):
         self.assertEqual(stats["median"], expected_stats["median"])
         self.assertEqual(stats["max"], expected_stats["max"])
         self.assertEqual(stats["min"], expected_stats["min"])
-        self.assertEqual(stats["total_requests"], expected_stats["total_requests"])
+        self.assertEqual(
+            stats["total_requests"], expected_stats["total_requests"]
+        )
 
     def test_empty_list(self):
         # Проверка поведения на пустом списке
@@ -39,4 +41,3 @@ class TestStatsCalculator(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

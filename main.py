@@ -42,7 +42,9 @@ def main(log_file_path: str, timezone: str, output_file: str):
     print(f"Parsed {len(response_times)} response times.")
 
     if response_times:
-        print(f"Calculating statistics for {len(response_times)} response times.")
+        print(
+            f"Calculating statistics for {len(response_times)} response times."
+        )
         stats = StatsCalculator.calculate(response_times)
         print(f"Writing statistics to CSV file: {output_file}")
         CSVWriter.write_to_csv(output_file, stats)

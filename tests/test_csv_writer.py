@@ -12,7 +12,7 @@ class TestCSVWriter(unittest.TestCase):
             "median": 0.31,
             "max": 0.59,
             "min": 0.12,
-            "total_requests": 20
+            "total_requests": 20,
         }
 
         # Путь к временному файлу
@@ -36,4 +36,3 @@ class TestCSVWriter(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
