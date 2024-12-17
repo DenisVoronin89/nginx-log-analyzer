@@ -1,38 +1,43 @@
+from typing import List, Dict
+from statistics import mean, median
+
+
 class StatsCalculator:
     """
-    Класс для расчета статистики по метрикам.
+    Расчет статистики по времени ответа для каждого URL.
     """
 
     @staticmethod
-    def calculate(response_times):
-        if (
-            not response_times
-        ):  # Если список пустой, возвращается значение по умолчанию
-            return {
-                "average": 0,
-                "median": 0,
-                "max": 0,
-                "min": 0,
-                "total_requests": 0,
-            }
+    def calculate(
+        urls: List[str], response_times: List[float]
+    ) -> List[Dict[str, float]]:
+        """
+        Вычисление статистики по времени отклика для каждого URL.
+        """
+        if not urls or not response_times:
+            return []
 
-        # Вычисление статистики
-        total_requests = len(response_times)
-        average = sum(response_times) / total_requests
-        sorted_times = sorted(response_times)
-        median = (
-            sorted_times[total_requests // 2]
-            if total_requests % 2 != 0
-            else (
-                sorted_times[total_requests // 2 - 1]
-                + sorted_times[total_requests // 2]
+        # Группировка по URL и вычисление статистики
+        url_stats = {}
+        for url, time in zip(urls, response_times):
+            if url not in url_stats:
+                url_stats[url] = []
+            url_stats[url].append(time)
+
+        result = []
+        for url, times in url_stats.items():
+            # Сортировка времени отклика для корректной медианы
+            times.sort()
+            result.append(
+                {
+                    "url": url,
+                    "count": len(times),
+                    "count_perc": len(times) / len(response_times) * 100,
+                    "time_avg": mean(times),
+                    "time_max": max(times),
+                    "time_med": median(times),
+                    "time_perc": sum(times) / sum(response_times) * 100,
+                    "time_sum": sum(times),
+                }
             )
-            / 2
-        )
-        return {
-            "average": average,
-            "median": median,
-            "max": max(response_times),
-            "min": min(response_times),
-            "total_requests": total_requests,
-        }
+        return result

@@ -6,37 +6,70 @@ class TestStatsCalculator(unittest.TestCase):
 
     def test_calculate_statistics(self):
         # Пример данных для теста
+        urls = [
+            "/index.html",
+            "/about.html",
+            "/index.html",
+            "/index.html",
+            "/about.html",
+        ]
         response_times = [0.12, 0.15, 0.20, 0.35, 0.50]
 
         # Ожидаемые результаты
-        expected_stats = {
-            "average": 0.264,
-            "median": 0.20,
-            "max": 0.50,
-            "min": 0.12,
-            "total_requests": 5,
-        }
+        expected_stats = [
+            {
+                "url": "/index.html",
+                "count": 3,
+                "count_perc": 60.0,
+                "time_avg": 0.22333333333333333,
+                "time_max": 0.35,
+                "time_med": 0.20,
+                "time_perc": 50.76,
+                "time_sum": 0.67,
+            },
+            {
+                "url": "/about.html",
+                "count": 2,
+                "count_perc": 40.0,
+                "time_avg": 0.325,
+                "time_max": 0.50,
+                "time_med": 0.325,
+                "time_perc": 49.24,
+                "time_sum": 0.65,
+            },
+        ]
 
-        stats = StatsCalculator.calculate(response_times)
+        # Рассчет статистики
+        stats = StatsCalculator.calculate(urls, response_times)
 
         # Проверка, что рассчитанные значения соответствуют ожидаемым
-        self.assertEqual(stats["average"], expected_stats["average"])
-        self.assertEqual(stats["median"], expected_stats["median"])
-        self.assertEqual(stats["max"], expected_stats["max"])
-        self.assertEqual(stats["min"], expected_stats["min"])
-        self.assertEqual(
-            stats["total_requests"], expected_stats["total_requests"]
-        )
+        for expected_stat, stat in zip(expected_stats, stats):
+            self.assertEqual(stat["url"], expected_stat["url"])
+            self.assertEqual(stat["count"], expected_stat["count"])
+            self.assertAlmostEqual(
+                stat["count_perc"], expected_stat["count_perc"], places=1
+            )
+            self.assertAlmostEqual(
+                stat["time_avg"], expected_stat["time_avg"], places=2
+            )
+            self.assertEqual(stat["time_max"], expected_stat["time_max"])
+            self.assertAlmostEqual(
+                stat["time_med"], expected_stat["time_med"], places=2
+            )  # Проверка медианы
+            self.assertAlmostEqual(
+                stat["time_perc"], expected_stat["time_perc"], places=1
+            )
+            self.assertAlmostEqual(
+                stat["time_sum"], expected_stat["time_sum"], places=2
+            )
 
     def test_empty_list(self):
         # Проверка поведения на пустом списке
+        urls = []
         response_times = []
-        stats = StatsCalculator.calculate(response_times)
-        self.assertEqual(stats["average"], 0)
-        self.assertEqual(stats["median"], 0)
-        self.assertEqual(stats["max"], 0)
-        self.assertEqual(stats["min"], 0)
-        self.assertEqual(stats["total_requests"], 0)
+        stats = StatsCalculator.calculate(urls, response_times)
+
+        self.assertEqual(stats, [])
 
 
 if __name__ == "__main__":
